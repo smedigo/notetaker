@@ -27,6 +27,8 @@ app.use(express.static('public'))
   app.get("/api/notes", function (req, res) {
   
     
+      res.json(db);
+    
 
      // use fs module to read the file
 
@@ -38,7 +40,22 @@ app.use(express.static('public'))
 
 
 
-  app.post("/api/notes", function (req, res) {
+  app.post("/api/notes", function (req, res) { 
+    
+    if (sendFile ) {  //?
+      sendFile.push(req.body);
+      res.json(true);
+    }
+    else {
+      db.push(req.body);
+      res.json(false);
+    }
+  });
+    
+    
+    
+    
+    //is this to create a new note?
 
    // Access the posted data in 'req.body'
 
@@ -53,7 +70,7 @@ app.use(express.static('public'))
      // THEN save the contents back to the 'db.JSON' with the fs module 
 
 
-  });
+  
 
   app.delete("/api/notes/:id", function (req, res) {
 
