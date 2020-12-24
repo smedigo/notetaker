@@ -84,17 +84,26 @@ app.use(express.static('public'))
 
      // THEN save the contents back to the 'db.JSON' with the fs module 
 
-  app.delete("/api/notes/id", function (req, res) {
+  app.delete("/api/notes/id",  (req, res, next)=> {
 
-    // const id = req.params.id
-
+    
+    // app.delete('/api/notes/id', (req, res, next) => {
+    //   const id = req.params.id;
+    //   Article.delete(id, (err) => {
+    //    if (err) return next(err);
+    //    res.send({ message: 'Deleted' });
+    //   });
+    //  });
       const id = req.params.id;
-      app.db.json('notes').remove({
+      app.db.json('/api/notes/id').remove({
         id: id,
         
       });
       return res.send(404).end();
     });
+
+
+
     // Access :id from 'req.params.id
 
   // USE the fs module to read the file
