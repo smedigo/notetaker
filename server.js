@@ -3,7 +3,7 @@ var express = require("express");
 const fs = require("fs");
 const path = require('path')
 const notes = require('./db/db.json')
-let id = 1;
+
 
 
 var app = express();   
@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use(express.static('public'))
   //point to the public folder to become accessable to the public
-
+  let id = 1;
   app.get('/', (req,res)=> {
     res.sendFile(path.join(__dirname, 'index.html'))
   })
@@ -46,17 +46,26 @@ app.use(express.static('public'))
   app.post("/api/notes", function (req, res) { 
 
     const newNote = req.body
+    console.log(req.body)
     newNote.id = id;
     id++
     //title, text, id
     
     if (newNote) {  
       notes.push(newNote);
+       
       res.json({
         newNote,
         notes
       });
-      fs.writeFile("../db/db.json",notes) 
+
+      
+      fs.writeFile("./db/db.json", JSON.stringify(notes), function(err) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("Success!");
+      });
     }
     else {
 
