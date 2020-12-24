@@ -38,10 +38,7 @@ app.use(express.static('public'))
      //send the parsed data back to the client with res.JSON()
   });
 
-  //fs.readFile(dbURL, 'utf8', (err, data) => {
-    //const dbURL = path.resolve(__dirname, "../db/db.json");
-    // <-- append new Note to the db.json
-  //});
+  
 
   app.post("/api/notes", function (req, res) { 
 
@@ -74,7 +71,6 @@ app.use(express.static('public'))
     }
   });
     
-    //is this to create a new note?
 
    // Access the posted data in 'req.body'
 
@@ -88,12 +84,17 @@ app.use(express.static('public'))
 
      // THEN save the contents back to the 'db.JSON' with the fs module 
 
-
-  
-
   app.delete("/api/notes/id", function (req, res) {
 
-    const id = req.params.id
+    // const id = req.params.id
+
+      const id = req.params.id;
+      app.db.json('notes').remove({
+        id: id
+        
+      });
+      return res.status(404).end();
+    });
     // Access :id from 'req.params.id
 
   // USE the fs module to read the file
@@ -106,11 +107,11 @@ app.use(express.static('public'))
   // Remove the traget element using Array.splice()
 
   //Option B:
-  myArray = myArray.filter(({id}) => id !==req.params.id);
+  // myArray = myArray.filter(({id}) => id !==req.params.id);
 
   // Return any time of success message
 
-  });
+  // });
 
 
   
