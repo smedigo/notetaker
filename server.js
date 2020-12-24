@@ -3,6 +3,7 @@ var express = require("express");
 const fs = require("fs");
 const path = require('path')
 const notes = require('./db/db.json')
+let id = 1;
 
 
 var app = express();   
@@ -27,7 +28,7 @@ app.use(express.static('public'))
   app.get("/api/notes", function (req, res) {
   
     
-      res.json(db);
+      res.json(notes);
     
 
      // use fs module to read the file
@@ -41,18 +42,34 @@ app.use(express.static('public'))
 
 
   app.post("/api/notes", function (req, res) { 
+
+    const newNote = req.body
+    newNote.id = id;
+    id++
+    //title, text, id
     
-    if (sendFile ) {  //?
-      sendFile.push(req.body);
-      res.json(true);
+    if (newNote) {  
+      notes.push(newNote);
+      res.json({
+        newNote,
+        notes
+      });
+      fs.writeFile("/db/db.json",notes)// <-- append new Note to the db.json
     }
     else {
-      db.push(req.body);
-      res.json(false);
+
+      console.log('Didnt work in the post method for new note' )
+      res.json('Could not create note at this time.');
     }
   });
     
-    
+  app.post("/api/clear", function(req, res) {
+    // Empty out the arrays of data
+  //  sendFile = 0;
+  //  db = 0;
+  
+  //  res.json({ ok: true });
+  });
     
     
     //is this to create a new note?
@@ -74,6 +91,7 @@ app.use(express.static('public'))
 
   app.delete("/api/notes/:id", function (req, res) {
 
+    const id = req.params.id
     // Access :id from 'req.params.id
 
   // USE the fs module to read the file
@@ -95,16 +113,16 @@ app.use(express.static('public'))
 
   
 // HTML Routes set up
-app.get("/", function(req, res) {     //define routs
-  s(/** path the notes.html file**/)
-  });
+//app.get("/", function(req, res) {     //define routs
+  //s(/** path the notes.html file**/)
+ // });
 
-  app.get("/notes", function(req, res) {     //define routs
+ // app.get("/notes", function(req, res) {     //define routs
 
     
 
-    res.sendFile("/");  // path the notes.html file
-  });
+  //  res.sendFile("/");  // path the notes.html file
+ //..== });
 
 
 
