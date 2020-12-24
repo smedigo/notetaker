@@ -38,8 +38,10 @@ app.use(express.static('public'))
      //send the parsed data back to the client with res.JSON()
   });
 
-
-
+  //fs.readFile(dbURL, 'utf8', (err, data) => {
+    //const dbURL = path.resolve(__dirname, "../db/db.json");
+    // <-- append new Note to the db.json
+  //});
 
   app.post("/api/notes", function (req, res) { 
 
@@ -54,7 +56,7 @@ app.use(express.static('public'))
         newNote,
         notes
       });
-      fs.writeFile("/db/db.json",notes)// <-- append new Note to the db.json
+      fs.writeFile("../db/db.json",notes) 
     }
     else {
 
@@ -62,15 +64,6 @@ app.use(express.static('public'))
       res.json('Could not create note at this time.');
     }
   });
-    
-  app.post("/api/clear", function(req, res) {
-    // Empty out the arrays of data
-  //  sendFile = 0;
-  //  db = 0;
-  
-  //  res.json({ ok: true });
-  });
-    
     
     //is this to create a new note?
 
@@ -89,7 +82,7 @@ app.use(express.static('public'))
 
   
 
-  app.delete("/api/notes/:id", function (req, res) {
+  app.delete("/api/notes/id", function (req, res) {
 
     const id = req.params.id
     // Access :id from 'req.params.id
