@@ -90,10 +90,10 @@ app.use(express.static('public'))
 
       const id = req.params.id;
       app.db.json('notes').remove({
-        id: id
+        id: id,
         
       });
-      return res.status(404).end();
+      return res.send(404).end();
     });
     // Access :id from 'req.params.id
 
@@ -130,9 +130,10 @@ app.use(express.static('public'))
 
 
   app.get("*", function(req, res) {     //define routs
-    res.sendFile("");  ///** path the notes.html file**/
+    res.sendFile(path.join(__dirname, 'index.html'))  ///** path the notes.html file**/
   });
 
-  app.listen(PORT, function() {     //listen to a port and be able to handle responses
+  app.listen(PORT, function() {  
+       //listen to a port and be able to handle responses
     console.log("App listening on PORT " + PORT);
   });
