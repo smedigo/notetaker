@@ -3,7 +3,7 @@ var express = require("express");
 const fs = require("fs");
 const path = require('path')
 const notes = require('./db/db.json')
-const { uuid } = require('uuidv4');
+const { uuidv4 } = require('uuidv4');
 
 
 var app = express();
@@ -44,11 +44,15 @@ app.post("/api/notes", function (req, res) {
 
   const newNote = req.body
   console.log(req.body)
-  // Access :id from 'req.params.id
-  //newNote.id = id; function for the id to be called from uuid
+  
+  newNote.id = uuidv4(); //added this
+
+  // fs.readFile(path.join(__dirname + "/db/db.json"), "utf8", function(err, data) {
+  //   if (err) throw err; //added this
+  // });
   //id++
   //title, text, id
-
+  let notes = JSON.parse(notes);
   if (newNote) {
     notes.push(newNote);
 
@@ -56,6 +60,7 @@ app.post("/api/notes", function (req, res) {
       newNote,
       notes
     });
+  
 
 
     fs.writeFile("./db/db.json", JSON.stringify(notes), function (err) {
