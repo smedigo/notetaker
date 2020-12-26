@@ -45,10 +45,10 @@ app.post("/api/notes", function (req, res) {
   const newNote = req.body
   console.log(req.body)
   
-  newNote.id = uuidv4(); //added this
+  newNote.id = uuidv4(); //added this, this id doesn't work?
 
-  // fs.readFile(path.join(__dirname + "/db/db.json"), "utf8", function(err, data) {
-  //   if (err) throw err; //added this
+  fs.readFile(path.join(__dirname + "/db/db.json"), "utf8", function(err, data) {
+    if (err) throw err; //added this
   // });
   //id++
   //title, text, id
@@ -91,12 +91,22 @@ app.post("/api/notes", function (req, res) {
 // THEN save the contents back to the 'db.JSON' with the fs module 
 
 app.delete("/api/notes/:id", (req, res) => {
+const deleteID = req.params.id //?
 
-  
+fs.readFile(path.join(__dirname + "/db/db.json"), "utf8", function(err, data) {
+  if (err) throw err;
 
-  let index = notes.findIndex(item => item.id === req.params.id);
+  let index = notes.findIndex(item => item.id === req.params.id);  //?
   notes.splice(index, 1);
   res.sendStatus(200);
+
+  let notes = JSON.parse(notes);  //should I use deleteID?
+
+  fs.writeFile('./db/db.json', JSON.stringify(notes), (err) => {
+    if (err) throw (err)
+    console.log("success")
+    res.json(notes)
+  });
 });
 
 
