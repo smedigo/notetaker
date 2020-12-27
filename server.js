@@ -3,7 +3,7 @@ var express = require("express");
 const fs = require("fs");
 const path = require('path')
 const notes = require('./db/db.json')
-const { uuidv4 } = require('uuidv4');
+const { v4: uuidv4 } = require('uuid');
 
 
 var app = express();
@@ -42,12 +42,12 @@ app.get("/api/notes", function (req, res) {
 
 app.post("/api/notes", function (req, res) {
 
-  const newNote = req.body
-  console.log(req.body)
+  let newNote = req.body
+  console.log(newNote)
   
-  newNote.id = uuidv4(); //added this, this id doesn't work?
+  //let newId = uuidv4(); //added this, this id doesn't work?
 
-  fs.readFile(path.join(__dirname + "/db/db.json"), "utf8", function(err, data) {
+  fs.readFile(path.join(__dirname + "./db/db.json"), "utf8", function(err, data) {
     if (err) throw err; //added this
   // });
   //id++
@@ -60,6 +60,10 @@ app.post("/api/notes", function (req, res) {
       newNote,
       notes
     });
+
+    let newId = uuidv4();
+    newNote["id"] = newId;
+    console.log(newNote);
   
 
 
@@ -75,7 +79,10 @@ app.post("/api/notes", function (req, res) {
     console.log('Didnt work in the post method for new note')
     res.json('Could not create note at this time.');
   }
-});
+})
+return
+}
+);
 
 
 // Access the posted data in 'req.body'
