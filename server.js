@@ -98,13 +98,13 @@ return
 // THEN save the contents back to the 'db.JSON' with the fs module 
 
 app.delete("/api/notes/:id", (req, res) => {
-const deleteID = req.params.id //?
+let deleteID = req.params.id //?
 
 fs.readFile(path.join(__dirname + "/db/db.json"), "utf8", function(err, data) {
   if (err) throw err;
 
-  let index = notes.findIndex(item => item.id === req.params.id);  //?
-  notes.splice(index, 1);
+  let notes = notes.findIndex(deleteID => deleteID.id === req.params.id);  //?
+  notes.splice(deleteID, 1);
   res.sendStatus(200);
 
   let notes = JSON.parse(notes);  //should I use deleteID?
