@@ -47,7 +47,7 @@ app.post("/api/notes", function (req, res) {
   
   //let newId = uuidv4(); //added this, this id doesn't work?
 
-  fs.readFile(path.join(__dirname + "./db/db.json"), "utf8", function(err, data) {
+  fs.readFile(path.join(__dirname + "./db/db.json"),  function(err, data) {
     if (err) throw err; //added this
   // });
   //id++
@@ -101,11 +101,11 @@ app.delete("/api/notes/:id", (req, res) => {
 
 let newNote = req.params.id 
 
-fs.readFile(path.join(__dirname + "/db/db.json"), "utf8", function(err, data) {
+fs.readFile(path.join(__dirname + "./db/db.json"), function(err, data) {
   if (err) throw err;
 
-  let newNote = newNote.findIndex(newNote => newNote.id === req.params.id);  //?
-  newNote.splice(newNote, 1);
+  let deleteNote = notes.findIndex(selected => selected.id === notes);  
+  notes.splice(deleteNote, 1);
   res.sendStatus(200);
 
   let notes = JSON.parse(notes); 
