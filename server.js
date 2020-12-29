@@ -143,17 +143,7 @@ app.listen(PORT, function () {
 
 
 
-// HTML Routes set up
-//app.get("/", function(req, res) {     //define routs
-//s(/** path the notes.html file**/)
-// });
 
-// app.get("/notes", function(req, res) {     //define routs
-
-
-
-//  res.sendFile("/");  // path the notes.html file
-//..== });
 
 
 
