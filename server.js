@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use(express.static('public'))
 //point to the public folder to become accessable to the public
-//let id = 1;
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
@@ -45,14 +45,8 @@ app.post("/api/notes", function (req, res) {
   let newNote = req.body
   console.log(newNote)
   
-  //let newId = uuidv4(); //added this, this id doesn't work?
-
   fs.readFile(path.join(__dirname + "./db/db.json"),  function(err, data) {
-    //if (err) throw err; //added this
-  // });
-  //id++
-  //title, text, id
-  //let notes = JSON.parse(notes);
+   
   if (newNote) {
     notes.push(newNote);
 
@@ -102,13 +96,12 @@ app.delete("/api/notes/:id", (req, res) => {
 let newNote = req.params.id 
 
 fs.readFile(path.join(__dirname + "./db/db.json"), function(err, data) {
-  // if (err) throw err;
+  
 
   let deleteNote = notes.findIndex(selected => selected.id === notes);  
   notes.splice(deleteNote, 1);
   res.sendStatus(200);
 
-  //let notes = JSON.parse(notes); 
 
   fs.writeFile('./db/db.json', JSON.stringify(notes), (err) => {
     if (err) throw (err)
